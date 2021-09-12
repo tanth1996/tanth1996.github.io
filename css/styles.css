@@ -3058,7 +3058,7 @@ textarea.form-control-lg {
 
 .btn-secondary {
   color: #fff;
-  background-color: #7464a1;
+  background-color: #646da1;
   border-color: #7464a1;
 }
 .btn-secondary:hover {
@@ -5240,7 +5240,7 @@ textarea.form-control-lg {
 .list-group-item.active {
   z-index: 2;
   color: white;
-  background-color: #c7ebfa15;
+  background-color: #3a4950;
   border-color: #c7ebfa;
 }
 .list-group-item + .list-group-item {

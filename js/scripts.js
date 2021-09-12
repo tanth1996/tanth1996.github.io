@@ -56,6 +56,7 @@ window.addEventListener('DOMContentLoaded', event => {
 $(document).ready(function(){ 
     $("#about-btn-scroll").click(smoothScroll);
     $(".nav-link").click(smoothScroll);
+    $(".scroll-link").click(smoothScroll);
 });
 
 function smoothScroll(e) {
