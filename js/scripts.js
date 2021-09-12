@@ -52,3 +52,14 @@ window.addEventListener('DOMContentLoaded', event => {
     });
 
 });
+
+$(document).ready(function(){ 
+    $("#about-btn-scroll").click(smoothScroll);
+    $(".nav-link").click(smoothScroll);
+});
+
+function smoothScroll(e) {
+    e.preventDefault();
+    const href = $(this).attr("href");
+    $("html, body").animate({scrollTop: $(href).offset().top - 90}, 500);
+}

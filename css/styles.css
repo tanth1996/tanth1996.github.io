@@ -5218,7 +5218,7 @@ textarea.form-control-lg {
 .list-group-item {
   position: relative;
   display: block;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.5rem;
   color: #212529;
   text-decoration: none;
   background-color: #fff;
@@ -5239,8 +5239,8 @@ textarea.form-control-lg {
 }
 .list-group-item.active {
   z-index: 2;
-  color: #fff;
-  background-color: #c7ebfa;
+  color: white;
+  background-color: #c7ebfa15;
   border-color: #c7ebfa;
 }
 .list-group-item + .list-group-item {
@@ -11651,12 +11651,18 @@ body {
 }
 
 .about-section {
-  padding-top: 10rem;
+  padding-top: 5rem;
   background: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.9) 75%, rgba(0, 0, 0, 0.8) 100%);
 }
 .about-section p {
   margin-bottom: 5rem;
 }
+
+#achievement-content {
+  background-color: #191c1f;
+  padding: 0.5rem;
+}
+
 
 .rw-words-1 h2{
   /* width:80%; */
