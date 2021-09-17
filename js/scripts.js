@@ -57,6 +57,8 @@ $(document).ready(function(){
     $("#about-btn-scroll").click(smoothScroll);
     $(".nav-link").click(smoothScroll);
     $(".scroll-link").click(smoothScroll);
+
+    $('.carousel').carousel()
 });
 
 function smoothScroll(e) {

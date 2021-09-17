@@ -11722,7 +11722,7 @@ body {
 }
 
 .projects-section {
-  padding: 10rem 0;
+  padding: 5rem 0;
 }
 .projects-section .featured-text {
   padding: 2rem;
@@ -11734,7 +11734,7 @@ body {
   }
 }
 .projects-section .project-text {
-  padding: 3rem;
+  padding: 2rem;
   font-size: 90%;
 }
 @media (min-width: 992px) {
@@ -11746,6 +11746,21 @@ body {
     border-width: 0.25rem;
     width: 30%;
   }
+}
+
+.carousel-caption {
+  background-color: rgba(216, 224, 221, 0.5);
+  position: relative;
+  left: auto;
+  right: auto;
+  padding: 1rem 1rem;
+  margin: 1rem 1rem;
+}
+
+.carousel-control-next,
+.carousel-control-prev /*, .carousel-indicators */ {
+    filter: invert(100%);
+    color:rgba(0, 0, 0, 0.9)
 }
 
 .signup-section {
