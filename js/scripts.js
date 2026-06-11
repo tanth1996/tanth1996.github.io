@@ -66,3 +66,8 @@ function smoothScroll(e) {
     const href = $(this).attr("href");
     $("html, body").animate({scrollTop: $(href).offset().top - 90}, 500);
 }
+
+// Re-enable scrolling after intro animation
+$(".main-portfolio").on('animationend', () => {
+  $("body").css("overflow", 'visible');
+});
