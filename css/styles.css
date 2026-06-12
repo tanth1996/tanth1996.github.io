@@ -4507,6 +4507,10 @@ fieldset:disabled .btn {
   display: block;
 }
 
+.tab-pane li {
+  margin-left: 20px;
+}
+
 .navbar {
   position: relative;
   display: flex;
