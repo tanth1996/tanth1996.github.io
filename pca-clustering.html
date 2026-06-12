@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebGL Clustering Around Principal Vectors</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        background-color: #0b0f19;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: #adbac7;
+      }
+      #canvas-container {
+        width: 100vw;
+        height: 100vh;
+      }
+      #ui-card {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        pointer-events: none;
+        background: rgba(13, 17, 23, 0.85);
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid #373e47;
+        max-width: 340px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+      }
+      h1 {
+        font-size: 1.1rem;
+        margin-top: 0;
+        color: #58a6ff;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+      }
+      p {
+        font-size: 0.85rem;
+        line-height: 1.5;
+        margin: 12px 0;
+      }
+      #status {
+        display: inline-block;
+        background: #388bfd;
+        color: white;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        transition: all 0.4s ease;
+      }
+      .vector-legend {
+        margin-top: 15px;
+        font-size: 0.8rem;
+        border-top: 1px solid #2d333b;
+        padding-top: 10px;
+      }
+      .legend-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 6px;
+      }
+      .color-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  </head>
+  <body>
+    <div id="ui-card">
+      <h1>Vector Clustering</h1>
+      <div id="status">Phase 1: Entropy</div>
+      <p id="desc">
+        Data points are scattered with high variance and noise across the
+        feature space.
+      </p>
+
+      <div class="vector-legend">
+        <div class="legend-row">
+          <div class="color-dot" style="background: #ff4560"></div>
+          Principal Vector A (Red Cluster)
+        </div>
+        <div class="legend-row">
+          <div class="color-dot" style="background: #00e396"></div>
+          Principal Vector B (Green Cluster)
+        </div>
+        <div class="legend-row">
+          <div class="color-dot" style="background: #feb019"></div>
+          Principal Vector C (Yellow Cluster)
+        </div>
+      </div>
+    </div>
+
+    <div id="canvas-container"></div>
+
+    <script>
+      // --- Setup Scene ---
+      const container = document.getElementById("canvas-container");
+      const scene = new THREE.Scene();
+      scene.fog = new THREE.FogExp2(0x0b0f19, 0.02);
+
+      const camera = new THREE.PerspectiveCamera(
+        60,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000,
+      );
+      camera.position.set(10, 8, 12);
+
+      const renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      container.appendChild(renderer.domElement);
+
+      const controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+
+      // --- Grid Floor ---
+      const grid = new THREE.GridHelper(24, 24, 0x2d333b, 0x1c2128);
+      grid.position.y = -4;
+      scene.add(grid);
+
+      // --- Define 3 Principal Vectors (Target Axes) ---
+      const vecA = new THREE.Vector3(1, 0.6, 0.2).normalize();
+      const vecB = new THREE.Vector3(-0.6, 1, -0.5).normalize();
+      const vecC = new THREE.Vector3(0.2, -0.4, 1).normalize();
+
+      // Helper to draw the principal vector lines
+      function makeVectorLine(direction, color) {
+        const points = [
+          direction.clone().multiplyScalar(-7),
+          direction.clone().multiplyScalar(7),
+        ];
+        const geom = new THREE.BufferGeometry().setFromPoints(points);
+        const mat = new THREE.LineBasicMaterial({
+          color: color,
+          linewidth: 2,
+          transparent: true,
+          opacity: 0.6,
+        });
+        return new THREE.Line(geom, mat);
+      }
+
+      scene.add(makeVectorLine(vecA, 0xff4560));
+      scene.add(makeVectorLine(vecB, 0x00e396));
+      scene.add(makeVectorLine(vecC, 0xfeb019));
+
+      // --- Generate Data Points ---
+      const numPoints = 3000;
+      const geometry = new THREE.BufferGeometry();
+
+      const startPositions = []; // Scattered chaotic state
+      const targetPositions = []; // Clustered around vectors state
+      const currentPositions = new Float32Array(numPoints * 3);
+      const colors = new Float32Array(numPoints * 3);
+
+      const colorPalette = [
+        new THREE.Color(0xff4560), // Red-ish
+        new THREE.Color(0x00e396), // Green-ish
+        new THREE.Color(0xfeb019), // Yellow-ish
+      ];
+
+      for (let i = 0; i < numPoints; i++) {
+        // Randomly assign point to one of the 3 principal vectors
+        const clusterId = Math.floor(Math.random() * 3);
+        let targetVec = vecA;
+        if (clusterId === 1) targetVec = vecB;
+        if (clusterId === 2) targetVec = vecC;
+
+        // Distance along the vector line (-5 to 5)
+        const distAlongVector = (Math.random() - 0.5) * 10;
+
+        // Target Clustered position: tight cylinder around the principal vector
+        const radialAngle = Math.random() * Math.PI * 2;
+        const radius = Math.random() * 0.3; // Very tight clustering radius
+
+        // Find an orthogonal vector for the cylinder wrapping
+        const orthoVec = new THREE.Vector3(1, 0, 0)
+          .cross(targetVec)
+          .normalize();
+        if (orthoVec.length() === 0)
+          orthoVec.copy(
+            new THREE.Vector3(0, 0, 1).cross(targetVec).normalize(),
+          );
+        const orthoVec2 = targetVec.clone().cross(orthoVec).normalize();
+
+        const tX =
+          targetVec.x * distAlongVector +
+          (orthoVec.x * Math.cos(radialAngle) +
+            orthoVec2.x * Math.sin(radialAngle)) *
+            radius;
+        const tY =
+          targetVec.y * distAlongVector +
+          (orthoVec.y * Math.cos(radialAngle) +
+            orthoVec2.y * Math.sin(radialAngle)) *
+            radius;
+        const tZ =
+          targetVec.z * distAlongVector +
+          (orthoVec.z * Math.cos(radialAngle) +
+            orthoVec2.z * Math.sin(radialAngle)) *
+            radius;
+
+        targetPositions.push(tX, tY, tZ);
+
+        // Start Scattered position: widespread high-entropy distribution
+        const sX = tX + (Math.random() - 0.5) * 7;
+        const sY = tY + (Math.random() - 0.5) * 7;
+        const sZ = tZ + (Math.random() - 0.5) * 7;
+
+        startPositions.push(sX, sY, sZ);
+
+        // Initialize current positions array
+        currentPositions[i * 3] = sX;
+        currentPositions[i * 3 + 1] = sY;
+        currentPositions[i * 3 + 2] = sZ;
+
+        // Set colors based on cluster identity
+        const c = colorPalette[clusterId];
+        colors[i * 3] = c.r;
+        colors[i * 3 + 1] = c.g;
+        colors[i * 3 + 2] = c.b;
+      }
+
+      geometry.setAttribute(
+        "position",
+        new THREE.BufferAttribute(currentPositions, 3),
+      );
+      geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+
+      // Point Material using a subtle canvas circle texture for clean rounds
+      const pMaterial = new THREE.PointsMaterial({
+        size: 0.12,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.85,
+        blending: THREE.AdditiveBlending,
+      });
+
+      const pointCloud = new THREE.Points(geometry, pMaterial);
+      scene.add(pointCloud);
+
+      // --- Animation Loop UI Elements ---
+      const statusTag = document.getElementById("status");
+      const descText = document.getElementById("desc");
+      const clock = new THREE.Clock();
+
+      function smoothstep(min, max, value) {
+        const x = Math.max(0, Math.min(1, (value - min) / (max - min)));
+        return x * x * (3 - 2 * x);
+      }
+
+      // --- Render loop ---
+      function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+
+        const time = clock.getElapsedTime();
+        const cycleDuration = 10;
+        const t = time % cycleDuration;
+
+        const posAttr = geometry.attributes.position;
+        let progress = 0;
+
+        // State/Phase handling
+        if (t < 2) {
+          // Phase 1: Keep Scattered
+          progress = 0;
+          statusTag.innerText = "Phase 1: Scattered Data";
+          statusTag.style.background = "#ff4560";
+          descText.innerText =
+            "Data features possess massive variance. No clear grouping structure is recognizable.";
+        } else if (t >= 2 && t < 5) {
+          // Phase 2: Pulling Into Principal Vectors
+          progress = smoothstep(2, 5, t);
+          statusTag.innerText = "Phase 2: Mathematical Pull";
+          statusTag.style.background = "#7952b3";
+          descText.innerText =
+            "The algorithm calculates proximity to principal vectors. Points lose orthogonal noise and begin migrating.";
+        } else if (t >= 5 && t < 8) {
+          // Phase 3: Fully Clustered
+          progress = 1;
+          statusTag.innerText = "Phase 3: Clustered State";
+          statusTag.style.background = "#00e396";
+          descText.innerText =
+            "Points successfully lock onto their primary principal component vectors, eliminating high-dimensional clutter.";
+        } else {
+          // Phase 4: Explode back out to start loop over cleanly
+          progress = 1 - smoothstep(8, 10, t);
+          statusTag.innerText = "Phase 4: Resetting Space";
+          statusTag.style.background = "#feb019";
+          descText.innerText =
+            "Reintroducing variance into the system to restart the decomposition cycle.";
+        }
+
+        // Linearly interpolate point positions based on progress factor
+        for (let i = 0; i < numPoints * 3; i++) {
+          posAttr.array[i] =
+            startPositions[i] * (1 - progress) + targetPositions[i] * progress;
+        }
+        posAttr.needsUpdate = true;
+
+        // Slow idle camera rotation
+        scene.rotation.y = time * 0.04;
+
+        renderer.render(scene, camera);
+      }
+
+      window.addEventListener("resize", () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      animate();
+    </script>
+  </body>
+</html>
