@@ -1,0 +1,24 @@
+<div id="ui-card">
+  <h1>Traffic Analysis</h1>
+  <div id="status">Phase 1: Rate Ramping</div>
+  <p id="desc">System tracking steady packet transmission speed with escalating frequency load.</p>
+
+  <div class="stats">
+    <div class="stat-row">
+      Target Frequency:
+      <span id="current-frequency" class="value" style="color: #58a6ff">3 Hz</span>
+    </div>
+    <div class="stat-row">
+      Buffer Occupancy:
+      <span id="buffer-count" class="value">0 packets</span>
+    </div>
+    <div class="stat-row">
+      Backpressure:
+      <span id="backpressure-state" class="value" style="color: #00e396">INACTIVE</span>
+    </div>
+  </div>
+</div>
+
+<div id="canvas-container">
+  <canvas #rendererCanvas></canvas>
+</div>
