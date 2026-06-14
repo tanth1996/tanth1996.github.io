@@ -34,7 +34,7 @@
 
 /* 1. Prompt Arrow (>) Accent Color */
 .prompt-arrow {
-  stroke: #00b7ff; /* Accent Neon Color */
+  stroke: var(--primary-colour); /* Accent Neon Color */
   animation: drawStroke 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
 }
 
