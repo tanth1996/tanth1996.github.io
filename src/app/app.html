@@ -2,7 +2,9 @@
   <app-intro-animation (fadeOutDoneEvent)="onIntroDone()"></app-intro-animation>
 } @else {
   <main>
-    <app-db-animation></app-db-animation>
+    <div>
+      <app-db-animation [canvasHeight]="600"></app-db-animation>
+    </div>
   </main>
   <router-outlet />
 }

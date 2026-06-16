@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, DOCUMENT, ElementRef, inject, input, OnInit, ViewChild } from '@angular/core';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
@@ -12,27 +12,39 @@ export class DbAnimation implements OnInit {
   @ViewChild('rendererCanvas', { static: true })
   public rendererCanvas!: ElementRef<HTMLCanvasElement>;
 
+  private document = inject(DOCUMENT);
+
+  public canvasHeight = input(500);
+
   ngOnInit(): void {
     this.initAnimation();
   }
 
   initAnimation() {
     // --- Core 3D Setup ---
-    const container = document.getElementById('canvas-container');
     const scene = new THREE.Scene();
+    scene.rotation.y = 0.69;
+
     scene.fog = new THREE.FogExp2(0x0b0f19, 0.025);
 
-    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
-    camera.position.set(0, 10, 10);
+    const camera = new THREE.PerspectiveCamera(
+      100,
+      window.innerWidth / this.canvasHeight(),
+      10,
+      1000,
+    );
+    camera.position.set(-7, 12, 22);
 
     const canvas = this.rendererCanvas.nativeElement;
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(window.innerWidth, this.canvasHeight());
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
     const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
+    controls.target.set(0, 7, -3);
+    // controls.enableDamping = true;
+    // controls.dampingFactor = 0.05;
+    controls.enabled = false;
 
     // Lights
     scene.add(new THREE.AmbientLight(0x222222));
@@ -124,7 +136,9 @@ export class DbAnimation implements OnInit {
     }
 
     // --- Runtime State Variables ---
-    const clock = new THREE.Clock();
+    const timer = new THREE.Timer();
+    timer.connect(this.document);
+
     let spawnAccumulator = 0;
     let lastDbConsumeTime = 0;
     let backpressureThrottled = false;
@@ -153,12 +167,13 @@ export class DbAnimation implements OnInit {
     const maxPacketsInChannel = 7;
 
     // --- Animation Loop ---
-    function animate() {
+    function animate(timestamp: number) {
       requestAnimationFrame(animate);
       controls.update();
 
-      const delta = clock.getDelta();
-      const elapsed = clock.getElapsedTime();
+      timer.update(timestamp);
+      const delta = timer.getDelta();
+      const elapsed = timer.getElapsed();
       const t = elapsed % cycleTime;
 
       // --- Phase State Evaluation ---
@@ -319,7 +334,6 @@ export class DbAnimation implements OnInit {
           }
         } else {
           // Standard linear path mode execution
-          // Standard linear path mode execution
           p.userData['progress'] += delta / 1.4;
           p.position.x = THREE.MathUtils.lerp(startX, endX, p.userData['progress']);
           p.userData['isQueued'] = false;
@@ -345,18 +359,16 @@ export class DbAnimation implements OnInit {
         }
       }
 
-      scene.rotation.y = elapsed * 0.015;
       renderer.render(scene, camera);
     }
 
     // --- Viewport Resize Handler ---
     window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.aspect = window.innerWidth / this.canvasHeight();
       camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setSize(window.innerWidth, this.canvasHeight());
     });
 
-    clock.start();
-    animate();
+    requestAnimationFrame(animate);
   }
 }
