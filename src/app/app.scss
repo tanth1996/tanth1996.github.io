@@ -1,0 +1,195 @@
+/* --- Scroll Container Wrapper --- */
+.portfolio-container {
+  width: 100%;
+  height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background-color: #0b0f19;
+  box-sizing: border-box;
+}
+
+/* --- Fixed Navigation Card Styles --- */
+#nav-card {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  background: rgba(13, 17, 23, 0.85);
+  padding: 15px 20px;
+  border-radius: 12px;
+  border: 1px solid #373e47;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  cursor: pointer;
+  min-width: 140px;
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.3s ease,
+    background 0.3s ease;
+}
+
+#nav-card:not(.expanded):hover {
+  transform: scale(1.04);
+  border-color: #58a6ff;
+  background: rgba(22, 30, 41, 0.9);
+}
+
+#nav-heading {
+  font-size: 1.1rem;
+  margin: 0;
+  color: #58a6ff;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  user-select: none;
+}
+
+/* Hamburger Icon */
+.burger-icon {
+  display: inline-block;
+  width: 16px;
+  height: 12px;
+  position: relative;
+}
+.burger-icon span {
+  display: block;
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  background: #58a6ff;
+  border-radius: 2px;
+  transition: all 0.25s ease-in-out;
+}
+.burger-icon span:nth-child(1) {
+  top: 0;
+}
+.burger-icon span:nth-child(2) {
+  top: 5px;
+}
+.burger-icon span:nth-child(3) {
+  top: 10px;
+}
+
+/* Burger Morphing */
+#nav-card.expanded .burger-icon span:nth-child(1) {
+  top: 5px;
+  transform: rotate(135deg);
+}
+#nav-card.expanded .burger-icon span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+#nav-card.expanded .burger-icon span:nth-child(3) {
+  top: 5px;
+  transform: rotate(-135deg);
+}
+
+/* Dropdown Items */
+#nav-items {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s ease,
+    margin-top 0.3s ease;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#nav-card.expanded #nav-items {
+  max-height: 200px;
+  opacity: 1;
+  margin-top: 15px;
+}
+
+.nav-link {
+  margin: 12px 0 4px 0;
+  padding-bottom: 4px;
+}
+.nav-link a {
+  color: #adbac7;
+  text-decoration: none;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  transition: color 0.2s ease;
+  display: block;
+}
+.nav-link a:hover {
+  color: #58a6ff;
+}
+
+/* --- Section Container Styles --- */
+.portfolio-section {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  position: relative;
+  width: 100%;
+  height: auto;
+  scroll-snap-align: start;
+  overflow: hidden;
+  border-bottom: 1px solid #1c2128;
+  box-sizing: border-box;
+}
+
+.canvas-container {
+  grid-area: 1 / 1; /* Forces it into the first row and column */
+  z-index: 1;
+  pointer-events: none;
+  width: 100%;
+  height: auto; /* Stretches to fill the section if the text card is taller */
+}
+
+.content-wrapper {
+  grid-area: 1 / 1;
+  z-index: 2;
+
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 40px;
+  box-sizing: border-box;
+  display: flex;
+}
+
+/* --- Translucent Glass Card --- */
+.glass-card {
+  color: #adbac7;
+  background: rgba(13, 17, 23, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid #373e47;
+  max-width: 480px;
+  width: 100%;
+  height: auto;
+  margin-bottom: auto;
+  margin-top: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-5px);
+  border-color: #58a6ff;
+}
+
+.glass-card h2 {
+  font-size: 1.5rem;
+  margin-top: 0;
+  color: #58a6ff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.glass-card p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 0;
+}

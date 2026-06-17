@@ -1,10 +1,71 @@
 @if (!isIntroDone()) {
   <app-intro-animation (fadeOutDoneEvent)="onIntroDone()"></app-intro-animation>
 } @else {
-  <main>
-    <div>
-      <app-db-animation [canvasHeight]="600"></app-db-animation>
+  <div class="portfolio-container">
+    <div id="nav-card" [class.expanded]="isNavExpanded" (click)="toggleNav($event)">
+      <div id="nav-heading">
+        <span>Tan T.H.</span>
+        <div class="burger-icon">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <ul id="nav-items">
+        <li class="nav-link"><a href="#alpha" (click)="closeNav()">Project Alpha</a></li>
+        <li class="nav-link"><a href="#beta" (click)="closeNav()">Project Beta</a></li>
+        <li class="nav-link"><a href="#gamma" (click)="closeNav()">Project Gamma</a></li>
+        <li class="nav-link"><a href="#about" (click)="closeNav()">About Me</a></li>
+      </ul>
     </div>
-  </main>
+
+    <section id="alpha" class="portfolio-section">
+      <div class="canvas-container">
+        <app-db-animation [canvasHeight]="500"></app-db-animation>
+      </div>
+      <div class="content-wrapper">
+        <div class="glass-card">
+          <h2>Project Alpha</h2>
+          <p>
+            An exploratory data visualization engine designed to map high-dimensional clustering
+            systems down to standard WebGL coordinate vectors. Optimized for GPU multi-threading
+            performance natively inside web layouts.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="beta" class="portfolio-section">
+      <div class="canvas-container">
+        <app-db-animation [canvasHeight]="500"></app-db-animation>
+      </div>
+      <div class="content-wrapper">
+        <div class="glass-card">
+          <h2>Project Beta</h2>
+          <p>
+            Architecting fluid pipeline solutions for real-time asset delivery. Built leveraging
+            modern web interfaces, keeping layouts responsive and lightweight while offloading
+            render pipelines safely outside the main script threads.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="gamma" class="portfolio-section">
+      <div class="canvas-container">
+        <app-db-animation [canvasHeight]="500"></app-db-animation>
+      </div>
+      <div class="content-wrapper">
+        <div class="glass-card">
+          <h2>Project Gamma</h2>
+          <p>
+            A deep dive into cross-platform visual synchronization layouts. Blending
+            high-performance mathematics with sleek, content-focused editorial design schemas across
+            changing screen configurations.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
   <router-outlet />
 }
