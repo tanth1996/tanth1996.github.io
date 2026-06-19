@@ -28,6 +28,7 @@ export class DbAnimation implements OnInit, AfterViewInit {
   public canvasHeight = input(500);
   public packetFrequency = signal(3);
 
+  public isInfoCardVisible = signal(false);
   public controlsEnabled = signal(false);
 
   public displayStatusText = signal('');
@@ -113,7 +114,7 @@ export class DbAnimation implements OnInit, AfterViewInit {
 
     this.scene.fog = new THREE.FogExp2(0x0b0f19, 0.025);
 
-    this.camera.position.set(-7, 12, 22);
+    this.camera.position.set(2.7, 9.2, 24.4);
 
     const canvas = this.rendererCanvas.nativeElement;
     this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
@@ -122,7 +123,7 @@ export class DbAnimation implements OnInit, AfterViewInit {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    this.controls.target.set(0, 7, -3);
+    this.controls.target.set(-0.5, -15.9, 1.6);
     this.controls.enableDamping = true;
     this.controls.dampingFactor = 0.05;
 
