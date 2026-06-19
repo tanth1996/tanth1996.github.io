@@ -5,9 +5,10 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:production": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "buildRunStatic": "ng build && npx http-server dist/tanth1996.github.io/browser/",
+    "buildRunStatic": "ng build --configuration production && npx http-server dist/tanth1996.github.io/browser/",
     "serve:ssr:tanth1996.github.io": "node dist/tanth1996.github.io/server/server.mjs"
   },
   "private": true,
