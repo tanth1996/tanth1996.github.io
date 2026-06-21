@@ -4,7 +4,6 @@
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  background-color: #0b0f19;
   box-sizing: border-box;
   scroll-behavior: smooth;
 }
@@ -32,14 +31,14 @@
 
 #nav-card:not(.expanded):hover {
   transform: scale(1.04);
-  border-color: #58a6ff;
+  border-color: var(--primary-colour);
   background: rgba(22, 30, 41, 0.9);
 }
 
 #nav-heading {
   font-size: 1.1rem;
   margin: 0;
-  color: #58a6ff;
+  color: var(--primary-colour);
   text-transform: uppercase;
   letter-spacing: 1.5px;
   display: flex;
@@ -61,7 +60,7 @@
   position: absolute;
   height: 2px;
   width: 100%;
-  background: #58a6ff;
+  background: var(--primary-colour);
   border-radius: 2px;
   transition: all 0.25s ease-in-out;
 }
@@ -122,7 +121,7 @@
   display: block;
 }
 .nav-link a:hover {
-  color: #58a6ff;
+  color: var(--primary-colour);
 }
 
 /* --- Section Container Styles --- */
@@ -176,14 +175,14 @@
 
 .glass-card:hover {
   transform: translateY(-5px);
-  border-color: #58a6ff;
+  border-color: var(--primary-colour);
 }
 
 .glass-card h2 {
   font-size: 1.5rem;
   margin-top: 0;
-  color: #58a6ff;
-  text-transform: uppercase;
+  color: var(--primary-colour);
+  font-weight: 500;
   letter-spacing: 2px;
 }
 
@@ -197,4 +196,21 @@
   .glass-card {
     margin-top: 200px;
   }
+}
+
+@keyframes fadeInContent {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.portfolio-container {
+  opacity: 0;
+  animation: fadeInContent 1s ease forwards;
+  overflow: visible;
 }

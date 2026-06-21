@@ -4,9 +4,13 @@
   --primary-font-family:
     Nunito, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif,
     Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  --background-colour: #0b0b0f;
 }
 
 body {
   margin: 0;
   font-family: var(--primary-font-family);
+  height: 100%;
+  margin: 0;
+  background-color: var(--background-colour);
 }

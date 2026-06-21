@@ -4,7 +4,7 @@
   left: 0;
   width: 100%;
   height: 100vh;
-  background-color: #0b0b0f;
+  background-color: var(--background-colour);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -34,7 +34,7 @@
 
 /* 1. Prompt Arrow (>) Accent Color */
 .prompt-arrow {
-  stroke: var(--primary-colour); /* Accent Neon Color */
+  stroke: var(--primary-colour);
   animation: drawStroke 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
 }
 
@@ -96,9 +96,7 @@
 @keyframes fadeInContent {
   from {
     opacity: 0;
-    transform: translateY(
-      20px
-    ); /* Optional: adds a nice subtle slide-up effect */
+    transform: translateY(20px); /* Optional: adds a nice subtle slide-up effect */
   }
   to {
     opacity: 1;
