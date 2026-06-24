@@ -34,7 +34,7 @@
 
 /* 1. Prompt Arrow (>) Accent Color */
 .prompt-arrow {
-  stroke: var(--primary-colour);
+  stroke: var(--color-accent-info);
   animation: drawStroke 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
 }
 

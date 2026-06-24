@@ -1,10 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
-  --primary-colour: #00b7ff;
+  /* --- Core Palette Accents & States --- */
+  --color-accent-info: #00b7ff; /* Primary Blue */
+  --color-accent-warning: #feb019; /* Warning Orange */
+  --color-accent-alert: #ff4560; /* Critical Crimson */
+  --color-accent-success: #00e396; /* Stable Emerald */
+  --color-accent-energy: #00ffff; /* Emissive Cyan */
+
+  /* --- Theme Backgrounds & Surfaces --- */
+  --color-bg-main: #0b0f19; /* Deep dark space (Body background & 3D Fog) */
+  --color-bg-surface: rgba(13, 17, 23, 0.9); /* Semi-translucent card surface */
+  --color-bg-node: #161b22; /* Mesh color for server/database nodes */
+  --color-bg-grid: #1c2128; /* Structural layout floor grid */
+
+  /* --- Borders, Lines, & Dividers --- */
+  --color-border-structural: #373e47; /* Main framing boundaries & link conduits */
+  --color-border-separator: #2d333b; /* Subtle inner section cutoffs */
+
+  /* --- Typography --- */
+  --color-text-main: #adbac7; /* Default readable body copy */
+  --color-text-muted: #8b949e; /* Dimmed stats labels / notes */
+  --color-text-bright: #ffffff; /* Crisp text overrides on dark backdrops */
+
+  /* --- Shadows & Effects --- */
+  --shadow-ui-card: 0 8px 32px rgba(0, 0, 0, 0.6);
+  --blur-ui-card: blur(4px);
+
+  /* --- Font Family --- */
   --primary-font-family:
     Nunito, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif,
     Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-  --background-colour: #0b0b0f;
 }
 
 body {
@@ -12,5 +37,5 @@ body {
   font-family: var(--primary-font-family);
   height: 100%;
   margin: 0;
-  background-color: var(--background-colour);
+  background-color: var(--color-bg-main);
 }
