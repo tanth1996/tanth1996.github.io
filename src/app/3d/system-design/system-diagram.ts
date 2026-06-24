@@ -198,7 +198,7 @@ export class SystemDiagramComponent implements OnInit, AfterViewInit, OnDestroy 
 
   private initThree() {
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0xc0c7d1);
+    // this.scene.background = new THREE.Color(0xc0c7d1);
     this.scene.fog = new THREE.FogExp2(0x0d1117, 0.015);
 
     // Dynamic Camera Configuration
