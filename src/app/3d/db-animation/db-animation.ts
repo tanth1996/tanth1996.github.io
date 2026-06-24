@@ -4,6 +4,7 @@ import {
   computed,
   DOCUMENT,
   ElementRef,
+  HostListener,
   inject,
   input,
   OnInit,
@@ -193,13 +194,6 @@ export class DbAnimation implements OnInit, AfterViewInit {
       this.scene.add(p);
       this.packets.push(p);
     }
-
-    // --- Viewport Resize Handler ---
-    window.addEventListener('resize', () => {
-      this.camera.aspect = window.innerWidth / this.canvasHeight();
-      this.camera.updateProjectionMatrix();
-      this.renderer.setSize(window.innerWidth, this.canvasHeight());
-    });
 
     requestAnimationFrame((timestamp) => this.animate(timestamp));
   }
@@ -407,5 +401,12 @@ export class DbAnimation implements OnInit, AfterViewInit {
     }
 
     this.renderer.render(this.scene, this.camera);
+  }
+
+  @HostListener('window:resize')
+  public onResize() {
+    this.camera.aspect = window.innerWidth / this.canvasHeight();
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(window.innerWidth, this.canvasHeight());
   }
 }
