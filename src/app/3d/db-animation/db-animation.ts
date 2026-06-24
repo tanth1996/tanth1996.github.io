@@ -114,7 +114,9 @@ export class DbAnimation implements OnInit, AfterViewInit {
 
     this.scene.fog = new THREE.FogExp2(0x0b0f19, 0.025);
 
-    this.camera.position.set(2.7, 9.2, 24.4);
+    this.camera.aspect = window.innerWidth / this.canvasHeight();
+    this.camera.position.set(-0.23, 5.6, 20.7);
+    this.camera.updateProjectionMatrix();
 
     const canvas = this.rendererCanvas.nativeElement;
     this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
@@ -123,7 +125,7 @@ export class DbAnimation implements OnInit, AfterViewInit {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    this.controls.target.set(-0.5, -15.9, 1.6);
+    this.controls.target.set(-2.3, -15.4, 0.6);
     this.controls.enableDamping = true;
     this.controls.dampingFactor = 0.05;
 
