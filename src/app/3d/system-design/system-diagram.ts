@@ -46,7 +46,6 @@ export class SystemDiagramComponent implements OnInit, AfterViewInit, OnDestroy 
   private document = inject(DOCUMENT);
 
   // Configuration Inputs using Modern Signal Inputs
-  public canvasHeight = input<number>(600);
   public angularLogo = input<string>('/assets/logos/angular.png');
   public nginxLogo = input<string>('/assets/logos/nginx.png');
   public k8sLogo = input<string>('/assets/logos/kubernetes.png');
@@ -201,18 +200,16 @@ export class SystemDiagramComponent implements OnInit, AfterViewInit, OnDestroy 
     // this.scene.background = new THREE.Color(0xc0c7d1);
     this.scene.fog = new THREE.FogExp2(0x0d1117, 0.015);
 
-    // Dynamic Camera Configuration
-    this.camera = new THREE.PerspectiveCamera(
-      50,
-      window.innerWidth / this.canvasHeight(),
-      0.1,
-      1000,
-    );
-    this.updateCameraForScreenSize();
-
     const canvas = this.rendererCanvas.nativeElement;
+    const width = canvas.parentElement!.clientWidth;
+    const height = canvas.parentElement!.clientHeight;
+
+    // Dynamic Camera Configuration
+    this.camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
+    this.updateCameraForScreenSize(width, height);
+
     this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
-    this.renderer.setSize(window.innerWidth, this.canvasHeight());
+    this.renderer.setSize(width, height);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
 
@@ -415,28 +412,30 @@ export class SystemDiagramComponent implements OnInit, AfterViewInit, OnDestroy 
    * Narrow Screen Optimization Guard Strategy: Modulates perspective
    * layouts based on dynamic layout constraints to maintain viewing safety bounds.
    */
-  private updateCameraForScreenSize() {
-    const width = window.innerWidth;
+  private updateCameraForScreenSize(width: number, height: number) {
     if (width < 600) {
       // Extremely narrow screens (Mobile)
-      this.camera.position.set(0, 14, 26);
+      this.camera.position.set(0, 8.4, 15.6);
       this.camera.fov = 65;
     } else if (width < 992) {
       // Mid-tier narrow viewports (Tablets)
-      this.camera.position.set(0, 10, 22);
+      this.camera.position.set(0, 7.3, 16.2);
       this.camera.fov = 55;
     } else {
       // Desktop Layout Monitors
       this.camera.position.set(0, 8, 18);
       this.camera.fov = 45;
     }
-    this.camera.aspect = width / this.canvasHeight();
+    this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
   }
 
   @HostListener('window:resize')
   public onResize() {
-    this.updateCameraForScreenSize();
-    this.renderer.setSize(window.innerWidth, this.canvasHeight());
+    const canvas = this.rendererCanvas.nativeElement;
+    const width = canvas.parentElement!.clientWidth;
+    const height = canvas.parentElement!.clientHeight;
+    this.updateCameraForScreenSize(width, height);
+    this.renderer.setSize(width, height);
   }
 }

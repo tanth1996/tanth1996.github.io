@@ -157,6 +157,30 @@
   justify-content: center;
 }
 
+.project-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  border-bottom: 1px solid #1c2128;
+  box-sizing: border-box;
+}
+
+.project-canvas-container {
+  flex: 1 1 800px;
+  // max-width: 800px;
+  height: 400px;
+  // pointer-events: none;
+  width: 100%;
+}
+
+.project-content-wrapper {
+  flex: 1 1 400px;
+}
+
 /* --- Translucent Glass Card --- */
 .glass-card {
   color: #adbac7;
