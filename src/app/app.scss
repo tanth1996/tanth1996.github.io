@@ -1,3 +1,20 @@
+@mixin gradient-heading(
+  $from-color: var(--color-accent-info),
+  $to-color: var(--color-accent-success)
+) {
+  font-size: 2rem !important;
+  letter-spacing: 1.5px !important;
+  font-weight: 600 !important;
+  background: linear-gradient(90deg, $from-color 0%, $to-color 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  display: inline-block !important;
+}
+
+.text-gradient-hero {
+  @include gradient-heading;
+}
+
 /* --- Scroll Container Wrapper --- */
 .portfolio-container {
   width: 100%;
@@ -7,6 +24,8 @@
   box-sizing: border-box;
   scroll-behavior: smooth;
   background-color: var(--color-bg-main);
+  opacity: 0;
+  animation: fadeInContent 1s ease forwards;
 }
 
 /* --- Fixed Navigation Card Styles --- */
@@ -212,7 +231,6 @@
 .glass-card h2 {
   font-size: 1.5rem;
   margin-top: 0;
-  color: var(--color-accent-info);
   font-weight: 500;
   letter-spacing: 2px;
 }
@@ -238,8 +256,53 @@
   }
 }
 
-.portfolio-container {
-  opacity: 0;
-  animation: fadeInContent 1s ease forwards;
-  overflow: visible;
+/* --- Configurable Divider Hero --- */
+$divider-padding: 80px 20px;
+$divider-bg: rgba(13, 17, 23, 0.4);
+$divider-border-color: #1c2128;
+$divider-max-width: 750px;
+
+.divider-hero {
+  position: relative;
+  width: 100%;
+  padding: $divider-padding;
+  background: $divider-bg;
+  border-top: 1px solid $divider-border-color;
+  border-bottom: 1px solid $divider-border-color;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+
+  .divider-content {
+    position: relative;
+    z-index: 2;
+    max-width: $divider-max-width;
+  }
+
+  .divider-pre-heading {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--color-accent-info);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+    font-weight: 500;
+    opacity: 0.85;
+  }
+
+  h2 {
+    @include gradient-heading;
+    margin: 0 0 16px 0;
+  }
+
+  p {
+    font-size: 1rem;
+    color: #768390; /* Soft secondary dark text */
+    line-height: 1.6;
+    margin: 0;
+    font-weight: 400;
+  }
 }

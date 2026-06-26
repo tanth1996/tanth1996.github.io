@@ -1,38 +1,41 @@
 @if (!isIntroDone()) {
   <app-intro-animation (fadeOutDoneEvent)="onIntroDone()"></app-intro-animation>
 } @else {
-  <div class="portfolio-container">
-    <div id="nav-card" [class.expanded]="isNavExpanded" (click)="toggleNav($event)">
-      <div id="nav-heading">
-        <span>Tan T.H.</span>
-        <div class="burger-icon">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
+  <div id="nav-card" [class.expanded]="isNavExpanded" (click)="toggleNav($event)">
+    <div id="nav-heading">
+      <span>Tan T.H.</span>
+      <div class="burger-icon">
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
-      <ul id="nav-items">
-        <li class="nav-link">
-          <a href="#my-software-philosophy" (click)="closeNav()">My Software Philosophy</a>
-        </li>
-      </ul>
     </div>
+    <ul id="nav-items">
+      <li class="nav-link">
+        <a href="#my-software-philosophy" (click)="closeNav()">My Software Philosophy</a>
+      </li>
+      <li class="nav-link">
+        <a href="#my-projects" (click)="closeNav()">My Projects</a>
+      </li>
+    </ul>
+  </div>
 
+  <div class="portfolio-container">
     <section id="my-software-philosophy" class="philosophy-section">
       <div class="canvas-container">
         <app-db-animation [canvasHeight]="800"></app-db-animation>
       </div>
       <div class="content-wrapper">
         <div class="glass-card">
-          <h2>The Magic of Software Engineering</h2>
+          <h2 class="text-gradient-hero">The Magic of Software Engineering</h2>
           <p>
             "Magic" is a term used to describe a process whose details are so well hidden that it
-            seems impossible. To me, that is what software engineering is.
+            seems impossible. To me, software engineering at its finest, is exactly that.
           </p>
           <p>
             As a software engineer, my concern is with managing complexity while keeping it out of
-            view from the audience. Most users need not concern themselves with the fancy
-            technologies and clever techniques that keep our digital world afloat.
+            view from the audience. Users need not concern themselves with the threads behind the
+            scenes that keep our digital world afloat.
           </p>
           <p>
             But personally, those very details are an endless source of curiosity and fascination.
@@ -44,6 +47,17 @@
             production of good software.
           </p>
         </div>
+      </div>
+    </section>
+
+    <section id="my-projects" class="divider-hero">
+      <div class="divider-content">
+        <span class="divider-pre-heading">From Concept to Execution</span>
+        <h2>Project Experience</h2>
+        <p>
+          Always on the lookout for better solutions, I have a proven track record of success in
+          delivering and maintaining software that makes a difference.
+        </p>
       </div>
     </section>
     <section class="project-section">
