@@ -54,6 +54,7 @@ export class SystemDiagramComponent implements OnInit, AfterViewInit, OnDestroy 
   public oracleLogo = input<string>('/assets/logos/oracle.png');
   public mongoLogo = input<string>('/assets/logos/mongodb.png');
   public githubLogo = input<string>('/assets/logos/github.png');
+  public copilotLogo = input<string>('/assets/logos/copilot.png');
 
   // Core Three.js Engine Variables
   private scene!: THREE.Scene;
@@ -180,6 +181,16 @@ export class SystemDiagramComponent implements OnInit, AfterViewInit, OnDestroy 
         wireframeColor: 0x24292e,
         size: [1, 32, 32],
       },
+      {
+        id: 'copilot',
+        name: 'GitHub Copilot',
+        geometryType: 'sphere',
+        position: new THREE.Vector3(-4.5, -4.5, 0),
+        logoUrl: this.copilotLogo(),
+        color: 0x161b22,
+        wireframeColor: 0x00b7ff,
+        size: [1, 32, 32],
+      },
     ];
 
     this.connectionsConfig = [
@@ -191,14 +202,14 @@ export class SystemDiagramComponent implements OnInit, AfterViewInit, OnDestroy 
       { from: 'k8s', to: 'dotnet', color: 0x414853, isBidirectional: true },
       { from: 'nodejs', to: 'mongodb', color: 0x414853, isBidirectional: true },
       { from: 'dotnet', to: 'oracle', color: 0x414853, isBidirectional: true },
-      { from: 'github', to: 'k8s', color: 0x2188ff, isBidirectional: false }, // Pipeline sync line
+      { from: 'github', to: 'k8s', color: 0x2188ff, isBidirectional: false },
+      { from: 'copilot', to: 'github', color: 0x2188ff, isBidirectional: false },
     ];
   }
 
   private initThree() {
     this.scene = new THREE.Scene();
-    // this.scene.background = new THREE.Color(0xc0c7d1);
-    this.scene.fog = new THREE.FogExp2(0x0d1117, 0.015);
+    this.scene.background = new THREE.Color(0xc7c9c9);
 
     const canvas = this.rendererCanvas.nativeElement;
     const width = canvas.parentElement!.clientWidth;
@@ -209,7 +220,7 @@ export class SystemDiagramComponent implements OnInit, AfterViewInit, OnDestroy 
     this.updateCameraForScreenSize(width, height);
 
     this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
-    this.renderer.setSize(width, height);
+    this.renderer.setSize(width, height, false);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
 
@@ -252,10 +263,12 @@ export class SystemDiagramComponent implements OnInit, AfterViewInit, OnDestroy 
         color: node.color,
         shininess: 80,
         specular: node.wireframeColor,
+        emissive: node.wireframeColor, // Subtle interior glow
+        emissiveIntensity: 0.15,
         transparent: true,
         opacity: 0.1,
         depthWrite: false,
-        blending: THREE.AdditiveBlending,
+        blending: THREE.NormalBlending,
       });
 
       const mesh = new THREE.Mesh(geom, mat);
@@ -296,15 +309,16 @@ export class SystemDiagramComponent implements OnInit, AfterViewInit, OnDestroy 
             map: texture,
             transparent: true,
             color: 0xffffff, // Prevents any weird color tinting overrides
+            fog: false,
           });
           const sprite = new THREE.Sprite(spriteMat);
+
+          // Apply the mathematically corrected aspect ratio scale
+          sprite.scale.set(scaleX, scaleY, 1);
 
           // Position logo safely above the node geometry
           const verticalOffset = node.geometryType === 'cylinder' ? 1.8 : 1.4;
           sprite.position.set(0, verticalOffset, 0);
-
-          // Apply the mathematically corrected aspect ratio scale
-          sprite.scale.set(scaleX, scaleY, 1);
 
           mesh.add(sprite);
           this.spriteObjects.push(sprite);
@@ -436,6 +450,6 @@ export class SystemDiagramComponent implements OnInit, AfterViewInit, OnDestroy 
     const width = canvas.parentElement!.clientWidth;
     const height = canvas.parentElement!.clientHeight;
     this.updateCameraForScreenSize(width, height);
-    this.renderer.setSize(width, height);
+    this.renderer.setSize(width, height, false);
   }
 }
