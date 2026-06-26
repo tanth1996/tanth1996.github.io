@@ -84,6 +84,7 @@ export class DbAnimation implements OnInit, AfterViewInit {
 
   constructor() {
     this.scene = new THREE.Scene();
+    this.scene.background = new THREE.Color(0x0b0f19);
     this.camera = new THREE.PerspectiveCamera(
       100,
       window.innerWidth / this.canvasHeight(),

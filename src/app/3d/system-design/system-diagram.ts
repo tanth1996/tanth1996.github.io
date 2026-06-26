@@ -7,7 +7,6 @@ import {
   input,
   OnDestroy,
   OnInit,
-  signal,
   ViewChild,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
