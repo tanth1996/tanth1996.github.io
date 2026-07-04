@@ -3,10 +3,11 @@ import { RouterOutlet } from '@angular/router';
 import { IntroAnimation } from './intro-animation/intro-animation';
 import { DbAnimation } from './3d/db-animation/db-animation';
 import { SystemDiagramComponent } from './3d/system-design/system-diagram';
+import { PidTracker } from './3d/pid-animation/pid-tracker';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, IntroAnimation, DbAnimation, SystemDiagramComponent],
+  imports: [RouterOutlet, IntroAnimation, DbAnimation, PidTracker, SystemDiagramComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
