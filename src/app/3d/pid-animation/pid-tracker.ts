@@ -10,6 +10,9 @@ import {
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import * as THREE from 'three';
+import { Line2 } from 'three/addons/lines/Line2.js';
+import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
+import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 
 interface HistoryNode {
   x: number;
@@ -66,6 +69,7 @@ export class PidTracker implements OnInit, AfterViewInit {
 
   private signalGeom!: THREE.BufferGeometry;
   private targetGeom!: THREE.BufferGeometry;
+  private errorGeom!: LineGeometry;
   private trackerGroup!: THREE.Group;
 
   private accumulator = 0;
@@ -131,6 +135,18 @@ export class PidTracker implements OnInit, AfterViewInit {
     targetRibbon.frustumCulled = false;
     this.scene.add(targetRibbon);
 
+    this.errorGeom = new LineGeometry();
+    this.errorGeom.setPositions([0, 0, 0.1, 0, 0, 0.1]);
+    const errorMat = new LineMaterial({
+      color: 0xff4560,
+      linewidth: 3,
+      transparent: true,
+      opacity: 0.4,
+    });
+    const errorLine = new Line2(this.errorGeom, errorMat);
+    errorLine.frustumCulled = false;
+    this.scene.add(errorLine);
+
     // --- Target Dot Tracker Mesh ---
     this.trackerGroup = new THREE.Group();
     const coreGeo = new THREE.SphereGeometry(0.12, 16, 16);
@@ -187,9 +203,18 @@ export class PidTracker implements OnInit, AfterViewInit {
       const leadNode = this.dynamicHistory[this.dynamicHistory.length - 1];
       this.trackerGroup.position.set(leadNode.x, leadNode.yCurrent, 0.1);
 
+      this.errorGeom.setPositions([
+        leadNode.x,
+        leadNode.yCurrent,
+        0.1, // Start node
+        leadNode.x,
+        leadNode.yTarget,
+        0.1, // End node
+      ]);
+
       const aspect = window.innerWidth / this.calculateHeight();
       const camTargetX = leadNode.x - (this.viewSize * aspect) / 5;
-      const camTargetY = leadNode.yTarget - 1.5;
+      const camTargetY = leadNode.yTarget - 3;
 
       // Linear interpolation smoothing for camera mapping frame-by-frame
       this.camera.position.x += (camTargetX - this.camera.position.x) * 0.05;
@@ -222,7 +247,7 @@ export class PidTracker implements OnInit, AfterViewInit {
     this.velocity += acceleration * dt;
     this.currentValue += this.velocity * dt;
 
-    if (this.lastTargetChangeTimeCounter >= this.MIN_TARGET_CHANGE_TIME && Math.random() < 0.005) {
+    if (this.lastTargetChangeTimeCounter >= this.MIN_TARGET_CHANGE_TIME && Math.random() < 0.01) {
       this.stepIncreaseTarget();
       return;
     }
