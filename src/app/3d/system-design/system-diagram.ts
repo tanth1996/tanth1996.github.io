@@ -284,7 +284,7 @@ export class SystemDiagramComponent implements OnInit, AfterViewInit, OnDestroy 
   private updateCameraForScreenSize(width: number, height: number) {
     if (width < 600) {
       // Extremely narrow screens (Mobile)
-      this.camera.position.set(0, 8.4, 15.6);
+      this.camera.position.set(0, 11, 20);
       this.camera.fov = 65;
     } else if (width < 992) {
       // Mid-tier narrow viewports (Tablets)
