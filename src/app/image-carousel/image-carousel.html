@@ -1,0 +1,43 @@
+<div class="carousel-wrapper">
+  @if (images.length > 0) {
+    <div class="carousel-track">
+      @for (img of images; track $index) {
+        <div class="carousel-slide" [class.active]="$index === currentIndex()">
+          <div class="image-container">
+            <img [src]="img.url" [alt]="img.alt" loading="lazy" />
+          </div>
+
+          @if (img.caption) {
+            <div class="carousel-caption">
+              <p>{{ img.caption }}</p>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Direction Controls -->
+    <button class="carousel-btn prev" (click)="prevSlide()" aria-label="Previous slide">
+      &#10094;
+    </button>
+    <button class="carousel-btn next" (click)="nextSlide()" aria-label="Next slide">
+      &#10095;
+    </button>
+
+    <!-- Bottom Indicator Dots -->
+    <div class="carousel-indicators">
+      @for (img of images; track $index) {
+        <button
+          class="indicator-dot"
+          [class.active]="$index === currentIndex()"
+          (click)="goToSlide($index)"
+          [aria-label]="'Go to slide ' + ($index + 1)"
+        ></button>
+      }
+    </div>
+  } @else {
+    <div class="carousel-placeholder">
+      <p>No preview images linked.</p>
+    </div>
+  }
+</div>

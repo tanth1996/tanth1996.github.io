@@ -7,6 +7,7 @@ import { PidTracker } from './3d/pid-animation/pid-tracker';
 import SystemDiagramConfig from './3d/system-design/system-diagram-config';
 import * as THREE from 'three';
 import { AppFooter } from './app-footer/app-footer';
+import { CarouselImage, ImageCarousel } from './image-carousel/image-carousel';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ import { AppFooter } from './app-footer/app-footer';
     DbAnimation,
     PidTracker,
     SystemDiagramComponent,
+    ImageCarousel,
     AppFooter,
   ],
   templateUrl: './app.html',
@@ -237,6 +239,27 @@ export class App {
       { from: 'kafka', to: 'sap', color: 0x414853, isBidirectional: false },
     ],
   };
+
+  faceSpaceImages: CarouselImage[] = [
+    {
+      url: '/assets/images/facespace/Idol FaceSpace Target Faces.png',
+      alt: 'Target Faces',
+      caption:
+        'A collection of face images are provided as input to the framework, on which a multilayer perceptron encoder is trained.',
+    },
+    {
+      url: '/assets/images/facespace/Idol FaceSpace Synthetic Faces.png',
+      alt: 'Synthetic Faces',
+      caption:
+        'Feature blending can be achieved based on tuning the encoder input once it is trained.',
+    },
+    {
+      url: '/assets/images/facespace/Idol FaceSpace Face Morphing.png',
+      alt: 'Face Morphing',
+      caption:
+        'The encoder can be used to morph between two faces by interpolating the latent space representation of the two faces.',
+    },
+  ];
 
   onIntroDone() {
     this.isIntroDone.set(true);
