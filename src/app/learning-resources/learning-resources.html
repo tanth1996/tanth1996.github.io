@@ -1,0 +1,28 @@
+<section class="resources-section">
+  <div class="resources-container">
+    <header class="resources-header">
+      <h2 class="resources-title">My Learning Resources</h2>
+      <p class="resources-subtitle">
+        Some of my inspirations and influences in our era of knowledge.
+      </p>
+    </header>
+
+    <div class="resources-list-wrapper">
+      <ul class="resources-list">
+        @for (item of resources; track item.url) {
+          <li class="resources-item">
+            <a [href]="item.url" target="_blank" rel="noopener noreferrer" class="resource-link">
+              <div class="link-content">
+                <div class="link-title-row">
+                  <span class="link-title">{{ item.title }}</span>
+                  <span class="link-arrow">&#10230;</span>
+                </div>
+                <p class="link-description">{{ item.description }}</p>
+              </div>
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+</section>

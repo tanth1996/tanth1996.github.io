@@ -8,6 +8,7 @@ import SystemDiagramConfig from './3d/system-design/system-diagram-config';
 import * as THREE from 'three';
 import { AppFooter } from './app-footer/app-footer';
 import { CarouselImage, ImageCarousel } from './image-carousel/image-carousel';
+import { LearningResources } from './learning-resources/learning-resources';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ import { CarouselImage, ImageCarousel } from './image-carousel/image-carousel';
     PidTracker,
     SystemDiagramComponent,
     ImageCarousel,
+    LearningResources,
     AppFooter,
   ],
   templateUrl: './app.html',

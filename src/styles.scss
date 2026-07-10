@@ -12,10 +12,12 @@
   --color-bg-surface: rgba(13, 17, 23, 0.9); /* Semi-translucent card surface */
   --color-bg-node: #161b22; /* Mesh color for server/database nodes */
   --color-bg-grid: #1c2128; /* Structural layout floor grid */
+  --color-bg-highlight: rgba(22, 30, 41, 0.5);
 
   /* --- Borders, Lines, & Dividers --- */
   --color-border-structural: #373e47; /* Main framing boundaries & link conduits */
   --color-border-separator: #2d333b; /* Subtle inner section cutoffs */
+  --color-border-highlight: rgba(88, 166, 255, 0.4);
 
   /* --- Typography --- */
   --color-text-main: #adbac7; /* Default readable body copy */
