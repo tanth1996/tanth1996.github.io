@@ -186,7 +186,8 @@
   width: 100%;
   height: auto;
   overflow: hidden;
-  border-bottom: 1px solid #1c2128;
+  padding-bottom: 40px;
+  margin-bottom: 40px;
   box-sizing: border-box;
 
   @media (min-width: 1220px) {
@@ -199,6 +200,24 @@
     max-width: 1400px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-bg-main) 20%,
+      var(--color-accent-success) 50%,
+      var(--color-bg-main) 80%,
+      transparent
+    );
+    opacity: 0.6;
   }
 }
 
