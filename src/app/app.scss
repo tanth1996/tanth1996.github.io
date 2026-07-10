@@ -190,7 +190,7 @@
   margin-bottom: 40px;
   box-sizing: border-box;
 
-  @media (min-width: 1220px) {
+  @media (min-width: 835px) {
     &:nth-of-type(even) {
       flex-direction: row-reverse;
     }
@@ -223,9 +223,7 @@
 
 .project-canvas-container {
   flex: 1 1 800px;
-  // max-width: 800px;
   height: 400px;
-  // pointer-events: none;
   width: 100%;
 }
 

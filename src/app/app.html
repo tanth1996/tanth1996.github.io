@@ -106,7 +106,7 @@
       </div>
     </section>
     <section class="project-section">
-      <div class="project-canvas-container">
+      <div class="project-canvas-container" [style.height.px]="400">
         <app-system-diagram [systemDiagramConfig]="ehnbSystemDiagramConfig"></app-system-diagram>
       </div>
       <div class="project-content-wrapper">
@@ -125,7 +125,7 @@
       </div>
     </section>
     <section class="project-section">
-      <div class="project-canvas-container">
+      <div class="project-canvas-container" [style.height.px]="400">
         <app-system-diagram
           [systemDiagramConfig]="policyAdminSystemDiagramConfig"
         ></app-system-diagram>
@@ -145,7 +145,7 @@
       </div>
     </section>
     <section class="project-section">
-      <div class="project-canvas-container">
+      <div class="project-canvas-container" [style.height.px]="400" [style.flex-basis.px]="400">
         <app-image-carousel [images]="faceSpaceImages"></app-image-carousel>
       </div>
       <div class="project-content-wrapper">
@@ -163,7 +163,7 @@
       </div>
     </section>
     <section class="project-section">
-      <div class="project-canvas-container">
+      <div class="project-canvas-container" [style.height.px]="300" [style.flex-basis.px]="400">
         <app-image-carousel [images]="trafficSimulatorImages"></app-image-carousel>
       </div>
       <div class="project-content-wrapper">
@@ -178,7 +178,7 @@
       </div>
     </section>
     <section class="project-section">
-      <div class="project-canvas-container">
+      <div class="project-canvas-container" [style.height.px]="300" [style.flex-basis.px]="400">
         <app-image-carousel [images]="smartCityModelImages"></app-image-carousel>
       </div>
       <div class="project-content-wrapper">
