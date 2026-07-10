@@ -1,4 +1,4 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, computed, Input, signal } from '@angular/core';
 
 export interface CarouselImage {
   url: string;
@@ -19,6 +19,8 @@ export class ImageCarousel {
   @Input() displayTime = 5000;
 
   currentIndex = signal(0);
+
+  hasControls = computed(() => this.images.length > 1);
   private timerId: any = null;
 
   ngOnInit(): void {

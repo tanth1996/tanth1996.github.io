@@ -261,6 +261,13 @@ export class App {
     },
   ];
 
+  smartCityModelImages: CarouselImage[] = [
+    {
+      url: '/assets/images/Smart City Model demo.gif',
+      alt: 'Smart City Model Demo',
+    },
+  ];
+
   onIntroDone() {
     this.isIntroDone.set(true);
   }

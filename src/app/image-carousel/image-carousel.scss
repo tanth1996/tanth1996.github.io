@@ -31,11 +31,15 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  padding-bottom: 56px; /* Reserves clear layout space at the bottom for dot indicators */
+  padding-bottom: 10px;
 
   &.active {
     opacity: 1;
     visibility: visible;
+  }
+
+  &.has-controls {
+    padding-bottom: 56px; /* Reserves clear layout space at the bottom for dot indicators */
   }
 }
 
