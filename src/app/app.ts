@@ -6,10 +6,18 @@ import { SystemDiagramComponent } from './3d/system-design/system-diagram';
 import { PidTracker } from './3d/pid-animation/pid-tracker';
 import SystemDiagramConfig from './3d/system-design/system-diagram-config';
 import * as THREE from 'three';
+import { AppFooter } from './app-footer/app-footer';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, IntroAnimation, DbAnimation, PidTracker, SystemDiagramComponent],
+  imports: [
+    RouterOutlet,
+    IntroAnimation,
+    DbAnimation,
+    PidTracker,
+    SystemDiagramComponent,
+    AppFooter,
+  ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
