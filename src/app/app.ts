@@ -268,6 +268,13 @@ export class App {
     },
   ];
 
+  trafficSimulatorImages: CarouselImage[] = [
+    {
+      url: '/assets/images/Lane-Changing animation.gif',
+      alt: 'Traffic Simulator Demo',
+    },
+  ];
+
   onIntroDone() {
     this.isIntroDone.set(true);
   }
