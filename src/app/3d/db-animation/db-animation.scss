@@ -1,0 +1,69 @@
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: var(--color-bg-main);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--color-text-main);
+}
+
+#animation-section {
+  position: relative;
+}
+
+#ui-card {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  pointer-events: none;
+  background: var(--color-bg-surface);
+  padding: 20px;
+  border-radius: 12px; // Could also be mapped if you create a --radius variable!
+  border: 1px solid var(--color-border-structural);
+  max-width: 320px;
+  box-shadow: var(--shadow-ui-card);
+  backdrop-filter: var(--blur-ui-card);
+  z-index: 10;
+}
+
+h1 {
+  font-size: 1.1rem;
+  margin-top: 0;
+  color: var(--color-accent-info);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+p {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin: 12px 0;
+}
+
+#status {
+  display: inline-block;
+  background: var(--color-accent-info);
+  color: var(--color-text-bright);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.stats {
+  margin-top: 15px;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  border-top: 1px solid var(--color-border-separator);
+  padding-top: 10px;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 6px 0;
+}
+
+.value {
+  font-weight: bold;
+}

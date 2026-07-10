@@ -1,0 +1,131 @@
+.resources-section {
+  width: 100%;
+  padding: 80px 20px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+}
+
+.resources-container {
+  width: 100%;
+  max-width: 850px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* --- Header Styling --- */
+.resources-header {
+  .resources-title {
+    font-size: 2rem;
+    color: var(--color-accent-info);
+    margin: 0 0 10px 0;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .resources-subtitle {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+/* --- List Architecture --- */
+.resources-list-wrapper {
+  width: 100%;
+}
+
+.resources-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Spacing between the list items */
+}
+
+.resources-item {
+  position: relative;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-structural);
+  border-radius: 12px;
+  overflow: hidden;
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+
+  &:hover {
+    border-color: var(--color-border-highlight);
+    background: var(--color-bg-highlight);
+  }
+}
+
+/* --- Interactive Link States --- */
+.resource-link {
+  display: block;
+  padding: 15px;
+  text-decoration: none;
+  box-sizing: border-box;
+
+  color: var(--color-accent-info);
+  transition: color 0.3s ease;
+
+  /* --- Complex Hover Animations --- */
+  &:hover {
+    .link-title {
+      color: var(--color-text-bright); /* Brightens the text text frame on interaction */
+    }
+
+    .link-arrow {
+      opacity: 1;
+      transform: translateX(6px); /* Elegant slide interaction */
+      color: var(--color-accent-info);
+    }
+
+    .link-content {
+      transform: translateX(4px); /* Shifts complete row slightly inwards */
+    }
+  }
+}
+
+/* --- Inner Text Layout --- */
+.link-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.link-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.link-title {
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--color-text-main);
+  transition: color 0.2s ease;
+}
+
+.link-arrow {
+  font-size: 1.2rem;
+  opacity: 0;
+  color: var(--color-text-muted);
+  transform: translateX(-4px);
+  transition:
+    transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+    opacity 0.3s ease,
+    color 0.3s ease;
+}
+
+.link-description {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}

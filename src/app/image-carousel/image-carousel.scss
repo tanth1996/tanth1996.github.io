@@ -1,0 +1,163 @@
+.carousel-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--color-bg-main);
+  border-radius: 16px;
+  border: 1px solid var(--color-border-structural);
+  overflow: hidden;
+  box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.6);
+  box-sizing: border-box;
+}
+
+.carousel-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0.5s ease;
+
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding-bottom: 10px;
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &.has-controls {
+    padding-bottom: 56px; /* Reserves clear layout space at the bottom for dot indicators */
+  }
+}
+
+/* --- Isolated Image Viewport --- */
+.image-container {
+  flex: 1;
+  min-height: 0; /* Prevents image from blowing past layout containers */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+}
+
+/* --- Mid-Deck Text Area --- */
+.carousel-caption {
+  flex-shrink: 0;
+  width: 100%;
+  padding: 14px 44px 0 44px; /* Lateral spacing keeps words clear of arrow elements */
+  box-sizing: border-box;
+
+  p {
+    margin: 0;
+    color: #adbac7;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+    text-align: center;
+  }
+}
+
+/* --- Base Deck Indicators Menu --- */
+.carousel-indicators {
+  position: absolute;
+  bottom: 14px; /* Securely locked to the bottom floor under the caption stack */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 4;
+  background: rgba(22, 30, 41, 0.6);
+  padding: 6px 12px;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(55, 62, 71, 0.5);
+
+  .indicator-dot {
+    border: none;
+    padding: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(173, 186, 199, 0.3);
+    cursor: pointer;
+    transition:
+      background 0.3s ease,
+      transform 0.3s ease;
+
+    &:hover {
+      background: rgba(173, 186, 199, 0.7);
+    }
+
+    &.active {
+      background: var(--color-accent-info);
+      transform: scale(1.2);
+    }
+  }
+}
+
+/* --- Control Buttons --- */
+.carousel-btn {
+  position: absolute;
+  top: 42%; /* Slightly offset upward to balance out the bottom text layout visually */
+  transform: translateY(-50%);
+  background: rgba(13, 17, 23, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid var(--color-border-structural);
+  color: var(--color-accent-info);
+  font-size: 1.1rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    background: rgba(22, 30, 41, 0.9);
+    border-color: var(--color-accent-info);
+    transform: translateY(-50%) scale(1.05);
+  }
+
+  &.prev {
+    left: 16px;
+  }
+  &.next {
+    right: 16px;
+  }
+}
+
+.carousel-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #768390;
+  font-size: 0.9rem;
+}
