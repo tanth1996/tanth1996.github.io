@@ -188,6 +188,13 @@
   overflow: hidden;
   border-bottom: 1px solid #1c2128;
   box-sizing: border-box;
+
+  @media (min-width: 1220px) {
+    &:nth-of-type(even) {
+      flex-direction: row-reverse;
+    }
+  }
+
   @media (min-width: 1400px) {
     max-width: 1400px;
     margin-left: auto;
